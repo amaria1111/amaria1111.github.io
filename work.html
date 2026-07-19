@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>amra.jp ｜ works</title>
+<meta name="description" content="work">
+<link rel="icon" href="images/amra.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/page-work.css">
+</head>
+<body>
+
+<div data-include="partials/header.html"></div>
+
+<p class="page-label">works</p>
+
+<main class="wrap" style="padding-block: var(--space-md) var(--space-xl);">
+  <!-- ==================== 作品グリッド ====================
+       ★ 作品の追加・編集は js/works-data.js だけでOKです。
+       このHTMLは自動で組み立てられるので、書き換え不要です。
+  ================================================= -->
+  <div class="work-grid" data-work-grid>
+    <!-- js/main.js が works-data.js の内容から自動生成します -->
+  </div>
+</main>
+
+<!-- ポップアップ(作品クリックで表示) -->
+<div class="work-modal" data-work-modal>
+  <button class="work-modal-close" data-modal-close aria-label="閉じる">×</button>
+  <div class="work-modal-inner">
+    <img data-modal-img src="" alt="">
+    <div class="work-modal-body">
+      <p class="title" data-modal-title></p>
+      <p class="meta" data-modal-meta></p>
+      <p class="desc" data-modal-desc></p>
+    </div>
+  </div>
+</div>
+
+<div data-include="partials/footer.html"></div>
+
+<script src="js/works-data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

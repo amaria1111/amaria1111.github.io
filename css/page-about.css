@@ -1,0 +1,19 @@
+/* ============================================================
+   page-about.css
+   About: 文字のみ。特に凝ったことはしない。
+   ============================================================ */
+
+.about-body {
+  padding-block: var(--space-lg);
+  max-width: 70ch;
+}
+.about-body p { margin-bottom: var(--space-md); }
+
+.about-history dt { color: var(--color-ink-soft); }
+.about-history .row {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-2xs) 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.about-history .row .y { width: 4em; flex-shrink: 0; color: var(--color-ink-soft); }

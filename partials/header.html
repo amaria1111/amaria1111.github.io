@@ -1,0 +1,35 @@
+<!-- ============================================================
+     partials/header.html
+     ★ サイト全体で共有しているヘッダーです。
+       ここを1回編集すれば、home / work / about / contact の
+       すべてのページに自動で反映されます(各HTMLファイルを
+       個別に直す必要はもうありません)。
+
+     ★ SHOP は外部サイト(BASEなど)に直接移動します。
+       href="https://your-shop-url.example.com" を
+       ご自身のショップURLに書き換えてください。
+     ★ 右上の Instagram / X (旧Twitter) の小さなリンクも、
+       href をご自身のアカウントURLに変更してください。
+     ★ 「現在どのページを見ているか」の下線表示は自動で付くので、
+       aria-current は書かなくて大丈夫です(js/main.js が判定します)。
+============================================================= -->
+<header class="site-header">
+  <a href="index.html" class="logo">amra.jp</a>
+
+  <div class="header-right">
+    <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="メニューを開く">menu</button>
+    <ul class="main-nav" data-main-nav>
+      <li><a href="index.html" data-nav-key="index.html">home</a></li>
+      <li><a href="work.html" data-nav-key="work.html">works</a></li>
+      <li><a href="about.html" data-nav-key="about.html">about</a></li>
+      <li><a href="contact.html" data-nav-key="contact.html">contact</a></li>
+      <li><a href="https://circlejerk.base.shop/" target="_blank" rel="noopener">shop</a></li>
+    </ul>
+  </div>
+
+  <nav class="social-mini" aria-label="SNS">
+    <a>|　</a>
+    <a href="https://www.instagram.com/rrrr.amam/" target="_blank" rel="noopener">ig</a>
+    <a href="https://x.com/amamarkgk" target="_blank" rel="noopener">x</a>
+  </nav>
+</header>

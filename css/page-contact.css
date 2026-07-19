@@ -1,0 +1,14 @@
+/* ============================================================
+   page-contact.css
+   ============================================================ */
+
+.contact-body { padding-block: var(--space-lg); }
+
+.contact-list { max-width: 40ch; }
+.contact-list .row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-2xs) 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.contact-list .row .label { color: var(--color-ink-soft); }

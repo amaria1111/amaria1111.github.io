@@ -1,0 +1,179 @@
+/* ============================================================
+   base.css
+   全ページ共通: リセット・タイポグラフィ・ヘッダー/ナビ・フッター。
+   ページ固有のスタイルは各 page-*.css に分けています。
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { margin: 0; padding: 0; list-style: none; }
+h1, h2, h3, p { margin: 0; font-size: inherit; font-weight: inherit; }
+
+/* ------------------------------------------------------------
+   ページ読み込み時の表示演出
+   ★ ヘッダー/フッターはすぐ表示し、本文(main)だけを滑らかに表示する。
+     js/main.js が読み込み完了後に main へ is-revealed を付与する。
+     ページ固有の演出(home のグラデーション表示・work の順次表示)は
+     各 page-*.css 側で main / .work-cell を上書きしている。
+------------------------------------------------------------ */
+main {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--duration-slow) var(--ease-smooth),
+              transform var(--duration-slow) var(--ease-smooth);
+}
+main.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+::selection { background: var(--color-accent); color: #fff; }
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.hlink {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.hlink:hover { opacity: 0.6; }
+
+/* ------------------------------------------------------------
+   ヘッダー / ナビゲーション
+   ★ 全ページ共通。html を直接見て編集する場合は
+     各ページの <header class="site-header"> ブロックをそのまま
+     コピーすれば同じ見た目になります。
+------------------------------------------------------------ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--gutter);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-line);
+  font-size: var(--text-sm);
+}
+
+/* ★ ナビ(+SNSリンク)をヘッダー右側にまとめて寄せる */
+.header-right {
+  margin-left: auto;
+}
+
+.logo {
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.main-nav {
+  display: flex;
+  gap: var(--space-md);
+}
+.main-nav a {
+  position: relative;
+  padding-bottom: 1px;
+}
+.main-nav a[aria-current="page"] {
+  color: var(--color-accent);
+}
+.main-nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 1px;
+  background: var(--color-accent);
+}
+.main-nav a:hover { color: var(--color-accent); }
+
+/* 右上の小さなSNSリンク */
+.social-mini {
+  display: flex;
+  gap: var(--space-xs);
+  font-size: var(--text-xs);
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+.social-mini a:hover { color: var(--color-accent); }
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: var(--space-3xs) var(--space-2xs);
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .nav-toggle { display: inline-block; }
+  .main-nav {
+    position: fixed;
+    inset: 0;
+    top: 45px;
+    background: var(--color-bg);
+    flex-direction: column;
+    padding: var(--space-lg) var(--gutter);
+    gap: var(--space-md);
+    font-size: var(--text-md);
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--duration-mid) var(--ease), transform var(--duration-mid) var(--ease), visibility var(--duration-mid);
+  }
+  .main-nav.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+  .header-right { display: flex; align-items: center; gap: var(--space-sm); }
+}
+
+/* ------------------------------------------------------------
+   フッター(共通・簡素)
+------------------------------------------------------------ */
+.site-footer {
+  margin-top: auto;
+  padding: var(--space-md) var(--gutter);
+  border-top: 1px solid var(--color-line);
+  font-size: var(--text-xs);
+  color: var(--color-ink-soft);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+/* ------------------------------------------------------------
+   ページ本文の共通見出し(大見出しは使わない方針。ラベル程度の大きさ)
+------------------------------------------------------------ */
+.page-label {
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  padding: var(--space-md) 0 0;
+  text-align: center;
+}

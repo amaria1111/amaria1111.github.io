@@ -1,12 +1,84 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>私の個人サイト</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>amra.jp ｜ home</title>
+<meta name="description" content="amra.jp にようこそ。">
+<link rel="icon" href="images/amra.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/page-home.css">
+<link rel="stylesheet" href="css/page-work.css">
 </head>
 <body>
-  <h1>こんにちは</h1>
-  <p>Visual StudioとGitHubで作ったサイトです。</p>
+
+<!-- ============================================================
+     ヘッダーは partials/header.html を読み込んで表示します。
+     ★ ナビの項目・SNSリンク・SHOPのURLを変更したい場合は、
+       このファイルではなく partials/header.html を編集してください。
+       1回の編集で home / work / about / contact すべてに反映されます。
+============================================================= -->
+<div data-include="partials/header.html"></div>
+
+<main>
+  <!-- ==================== キービジュアル ====================
+       ★ ページを開いてすぐに表示される画像です。
+       画像を差し替えるには images/hero.jpg を上書きするか、
+       下の src="images/hero.jpg" のパスを変更してください。
+  ================================================= -->
+  <section class="hero-visual">
+    <div class="hero-visual-frame">
+      <img src="images/hero.png" alt="Key Visual">
+    </div>
+
+    <!-- ささやかなお知らせ欄(shopの新着など)。
+         キービジュアルに重なる吹き出し(SVG)+テキストのタイプライター表示。
+         文章一覧・切り替えロジックは js/main.js の setupHeroNews() を編集してください。 -->
+    <div class="hero-news-pos">
+      <div class="hero-news" data-hero-news tabindex="0" role="button" aria-label="お知らせを切り替える">
+        <img class="hero-news-bg" src="images/speech-bubble.svg" alt="" aria-hidden="true">
+        <span class="hero-news-text"><span data-hero-news-text></span><span class="hero-caret" data-hero-caret aria-hidden="true"></span></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="home-margin">
+    
+  </div>
+
+  <!-- ==================== workギャラリー(プレビュー) ====================
+       ★ 作品の追加・編集は js/works-data.js だけでOKです。
+       このHTMLは自動で組み立てられるので、書き換え不要です。
+  ================================================= -->
+  <section class="home-work">
+    
+    <div class="wrap">
+      <div class="work-grid" data-work-grid data-limit="4">
+        <!-- js/main.js が works-data.js の内容から自動生成します -->
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ポップアップ(作品クリックで表示) -->
+<div class="work-modal" data-work-modal>
+  <button class="work-modal-close" data-modal-close aria-label="閉じる">×</button>
+  <div class="work-modal-inner">
+    <img data-modal-img src="" alt="">
+    <div class="work-modal-body">
+      <p class="title" data-modal-title></p>
+      <p class="meta" data-modal-meta></p>
+      <p class="desc" data-modal-desc></p>
+    </div>
+  </div>
+</div>
+
+<div data-include="partials/footer.html"></div>
+
+<script src="js/works-data.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
