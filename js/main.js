@@ -84,6 +84,9 @@ function setupNavToggle() {
   });
 }
 
+/* ★ グリッドに実際表示されている作品(並び替え・件数制限後)。ポップアップの前後移動で使う */
+let renderedWorks = [];
+
 /* ---------------- Work: グリッド生成 ---------------- */
 function renderWorkGrid() {
   const grid = document.querySelector("[data-work-grid]");
@@ -93,6 +96,7 @@ function renderWorkGrid() {
   // ★ IDが大きいものほど上(先頭)に表示
   const sorted = [...WORKS].sort((a, b) => Number(b.id) - Number(a.id));
   const works = sorted.slice(0, limit);
+  renderedWorks = works;
 
   grid.innerHTML = works.map((w, i) => `
     <button class="work-cell" type="button"
@@ -111,11 +115,15 @@ function setupWorkModal() {
   const grid = document.querySelector("[data-work-grid]");
   if (!modal || !grid) return;
 
-  grid.addEventListener("click", (e) => {
-    const cell = e.target.closest(".work-cell");
-    if (!cell) return;
-    const w = WORKS.find((item) => item.id === cell.dataset.id);
-    if (!w) return;
+  let currentIndex = 0;
+  const prevBtn = modal.querySelector("[data-modal-prev]");
+  const nextBtn = modal.querySelector("[data-modal-next]");
+
+  function openWork(index) {
+    if (!renderedWorks.length) return;
+    // ★ 端まで行ったら循環させず、そこで止める
+    currentIndex = Math.min(Math.max(index, 0), renderedWorks.length - 1);
+    const w = renderedWorks[currentIndex];
     modal.querySelector("[data-modal-img]").src = w.image;
     modal.querySelector("[data-modal-img]").alt = w.title;
     modal.querySelector("[data-modal-title]").textContent = w.title;
@@ -123,16 +131,35 @@ function setupWorkModal() {
     modal.querySelector("[data-modal-desc]").textContent = w.description || "";
     modal.classList.add("is-open");
     document.body.style.overflow = "hidden";
+    prevBtn.disabled = currentIndex <= 0;
+    nextBtn.disabled = currentIndex >= renderedWorks.length - 1;
+  }
+
+  grid.addEventListener("click", (e) => {
+    const cell = e.target.closest(".work-cell");
+    if (!cell) return;
+    const index = renderedWorks.findIndex((item) => item.id === cell.dataset.id);
+    if (index === -1) return;
+    openWork(index);
   });
 
   const close = () => {
     modal.classList.remove("is-open");
     document.body.style.overflow = "";
   };
+  const showPrev = () => openWork(currentIndex - 1);
+  const showNext = () => openWork(currentIndex + 1);
 
   modal.querySelector("[data-modal-close]").addEventListener("click", close);
+  modal.querySelector("[data-modal-prev]").addEventListener("click", showPrev);
+  modal.querySelector("[data-modal-next]").addEventListener("click", showNext);
   modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  document.addEventListener("keydown", (e) => {
+    if (!modal.classList.contains("is-open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") showPrev();
+    if (e.key === "ArrowRight") showNext();
+  });
 }
 
 /* ----------------------------------------------------------------

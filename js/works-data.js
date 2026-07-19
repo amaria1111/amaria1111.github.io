@@ -11,10 +11,9 @@
    ============================================================ */
 
 const WORKS = [
-  { id: "01", title: "紙の余熱",     year: "2025", medium: "Zine",         image: "images/works/work-01.png", description: "リソグラフで刷った自主制作のZine。5号まで継続中。" },
-  { id: "02", title: "窓辺の記録",   year: "2024", medium: "Illustration", image: "images/works/work-02.png", description: "日々のスケッチをまとめたイラストシリーズ。" },
-  { id: "03", title: "無題の展示",   year: "2024", medium: "Exhibition",   image: "images/works/work-03.jpg", description: "都内ギャラリーでの二人展に出品した作品群。" },
-  { id: "04", title: "夜の配達",     year: "2023", medium: "Editorial",    image: "images/work-04.jpg", description: "フリーペーパーに寄稿した挿絵と誌面デザイン。" },
-  { id: "05", title: "同人誌即売会向けポスター", year: "2023", medium: "Print", image: "images/work-05.jpg", description: "即売会当日に配布したフリーペーパー兼ポスター。" },
-  { id: "06", title: "小さな標本",   year: "2022", medium: "Web",          image: "images/work-06.jpg", description: "個人サイト上で不定期に公開しているWeb限定作品。" }
-];
+  { id: "01", title: "JPxG - ROUND 2 ",     year: "2024", medium: "jacket design",         image: "images/works/work-01.png", description: "キャラクターデザインとジャケットデザインをしました" },
+  { id: "02", title: "MAD BREAKS - MBSInvasion",   year: "2024", medium: "illustration", image: "images/works/work-02.png", description: "キャラクターイラストを担当しました" },
+  { id: "03", title: "MAD BREAKS - MBSInvasion",   year: "2024", medium: "illustration", image: "images/works/work-03.png", description: "キャラクターイラストを担当しました" },
+  { id: "04", title: "original T-shirt",   year: "2025", medium: "silkscreen",   image: "images/works/work-04.png", description: "シルクスクリーンの習作として作りました。" },
+  { id: "05", title: "Nekomata Records - Maid-Attack",   year: "2025", medium: "illustration",   image: "images/works/work-05.png", description: "キャラクターイラストを担当しました" }
+ ];

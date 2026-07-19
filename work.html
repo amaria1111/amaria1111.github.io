@@ -30,15 +30,17 @@
 
 <!-- ポップアップ(作品クリックで表示) -->
 <div class="work-modal" data-work-modal>
-  <button class="work-modal-close" data-modal-close aria-label="閉じる">×</button>
+  <button class="work-modal-nav work-modal-prev" data-modal-prev aria-label="前の作品">‹</button>
   <div class="work-modal-inner">
     <img data-modal-img src="" alt="">
     <div class="work-modal-body">
-      <p class="title" data-modal-title></p>
-      <p class="meta" data-modal-meta></p>
-      <p class="desc" data-modal-desc></p>
+      <p class="title"><span data-modal-title></span></p>
+      <p class="meta"><span data-modal-meta></span></p>
+      <p class="desc"><span data-modal-desc></span></p>
     </div>
   </div>
+  <button class="work-modal-nav work-modal-next" data-modal-next aria-label="次の作品">›</button>
+  <button class="work-modal-close" data-modal-close aria-label="閉じる">close</button>
 </div>
 
 <div data-include="partials/footer.html"></div>
