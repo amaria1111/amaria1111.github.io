@@ -1,8 +1,3 @@
-/* ============================================================
-   page-work.css
-   Work: 淡々としたグリッド(Instagramのプロフィールのような並び)。
-   クリックでポップアップ表示。
-   ============================================================ */
 
 .work-grid {
   display: grid;
@@ -22,7 +17,7 @@
   padding: 0;
   display: block;
   width: 100%;
-  /* ★ 新しい作品(配列の先頭)から順に表示。遅延は js/main.js が transition-delay で指定 */
+
   opacity: 0;
   transform: translateY(14px);
   transition: opacity var(--duration-slow) var(--ease-smooth),
@@ -51,9 +46,6 @@
 }
 .work-cell:hover .caption { opacity: 1; transform: translateY(0); }
 
-/* ------------------------------------------------------------
-   ポップアップ(クリックで拡大表示)
------------------------------------------------------------- */
 .work-modal {
   position: fixed;
   inset: 0;
@@ -71,7 +63,7 @@
 .work-modal-inner {
   position: relative;
   background: var(--color-bg);
-  max-width: min(1200px, 96vw); /* ★ ポップアップの大きさはここで調整 */
+  max-width: min(1200px, 96vw);
   max-height: 92vh;
   overflow-y: auto;
   display: grid;
@@ -88,28 +80,22 @@
   font-size: var(--text-sm);
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 縦方向中央が基準 */
+  justify-content: center;
 }
 .work-modal-body .title { font-size: var(--text-lg); font-weight: bold; margin-bottom: var(--space-3xs); }
-.work-modal-body .meta { color: var(--color-ink-soft); margin-bottom: 1px; } /* ★ descとの間隔はここ */
+.work-modal-body .meta { color: var(--color-ink-soft); margin-bottom: 1px; }
 .work-modal-body .desc {
   color: var(--color-ink-soft);
   line-height: 1.9;
-  /*margin-bottom: var(--space-lg); /* ★ 中央より少し上に見せるための余白。大きくするほど上に寄る */
+
 }
 
-/* ------------------------------------------------------------
-   デスクトップ限定の見せ方(スマホは上の基本スタイルのまま)
-   ★ 画像に文章を重ね、ホバー中だけ表示。外すと右にスライドしながら消える。
------------------------------------------------------------- */
 @media (min-width: 701px) and (hover: hover) and (pointer: fine) {
   .work-modal-inner {
-    /* ★ grid のままだと暗黙の行が箱の高さまで伸びず、画像のheight:100%が
-       正しく解決できないまま欠けてしまうため、画像1枚だけのデスクトップでは
-       display を grid から flex に変更している */
+
     display: flex;
     overflow: hidden;
-    /* ★ 固定の箱にせず、画像のサイズに合わせて縮む(余白=レターボックスが出ない) */
+
     width: auto;
     height: auto;
     max-width: min(1200px, 96vw);
@@ -120,21 +106,21 @@
     width: auto;
     height: auto;
     max-width: 100%;
-    max-height: min(900px, 92vh); /* コンテナのmax-heightと同じ値を指定(%だと解決できないため) */
+    max-height: min(900px, 92vh);
   }
 
   .work-modal-body {
     position: absolute;
-    right: -28px; /* ★ transformではなくrightの値でスライドさせる(理由は下記) */
+    right: -28px;
     bottom: 0;
     max-width: 100%;
     background: none;
-    text-align: right; /* ★ 文字を右寄せに */
-    padding-bottom: 0px; /* ★ 下側の余白を減らして、少し下に見せる */
+    text-align: right;
+    padding-bottom: 0px;
     visibility: hidden;
     transition: right var(--duration-mid) var(--ease-smooth),
                 visibility 0s linear var(--duration-mid);
-    pointer-events: none; /* ホバー判定は下の画像に譲る */
+    pointer-events: none;
   }
   .work-modal-inner:hover .work-modal-body {
     right: 0;
@@ -142,8 +128,6 @@
     transition: right var(--duration-mid) var(--ease-smooth), visibility 0s;
   }
 
-  /* ★ ドロップシャドウの代わりに、文字だけを覆う白背景(マーカーのような見た目)を敷く。
-       複数行になるdescは box-decoration-break: clone で行ごとに背景がつく */
   .work-modal-body [data-modal-title],
   .work-modal-body [data-modal-meta],
   .work-modal-body [data-modal-desc] {
@@ -156,7 +140,6 @@
   }
 }
 
-/* ポップアップの中央下に置く「close」テキストリンク(枠なし) */
 .work-modal-close {
   background: none;
   border: none;
@@ -171,7 +154,6 @@
 }
 .work-modal-close:hover { opacity: 0.7; }
 
-/* 前後の作品に切り替える矢印(デスクトップのみ。スマホでは表示しない) */
 .work-modal-nav {
   display: none;
 }

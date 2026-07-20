@@ -15,61 +15,34 @@
 </head>
 <body>
 
-<!-- ============================================================
-     ヘッダーは partials/header.html を読み込んで表示します。
-     ★ ナビの項目・SNSリンク・SHOPのURLを変更したい場合は、
-       このファイルではなく partials/header.html を編集してください。
-       1回の編集で home / work / about / contact すべてに反映されます。
-============================================================= -->
 <div data-include="partials/header.html"></div>
 
 <main>
-  <!-- ==================== キービジュアル ====================
-       ★ ページを開いてすぐに表示される画像です。
-       画像を差し替えるには images/hero.jpg を上書きするか、
-       下の src="images/hero.jpg" のパスを変更してください。
-  ================================================= -->
+
   <section class="hero-visual">
     <div class="hero-visual-frame">
       <img src="images/hero.png" alt="Key Visual">
     </div>
 
-    <!--　吹き出し
-         キービジュアルに重なる吹き出し(SVG path)+テキストのタイプライター表示。
-         吹き出しはドラッグで移動でき、足の部分は常に hero.png の中心を向くよう
-         js/main.js の setupHeroBubble() が毎回 path を再計算しています。
-         文章一覧・切り替えロジックは js/main.js の setupHeroNews() を編集してください。 -->
-    <div class="hero-news-pos" data-hero-news-pos>
-      <div class="hero-news" data-hero-news tabindex="0" role="button" aria-label="お知らせを切り替える(ドラッグで移動できます)">
-        <svg class="hero-news-bg" data-hero-bubble-svg viewBox="-70 -70 310 214" aria-hidden="true">
-          <path data-hero-bubble-path fill="#fff" stroke="#9b9b9b" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"></path>
-        </svg>
-        <span class="hero-news-text" data-hero-news-text-box><span data-hero-news-text></span><span class="hero-caret" data-hero-caret aria-hidden="true"></span></span>
-      </div>
-    </div>
+    <div class="hero-bubbles" data-hero-bubbles></div>
   </section>
 
   <div class="home-margin">
-    
+
   </div>
 
-  <!-- ==================== workギャラリー(プレビュー) ====================
-       ★ 作品の追加・編集は js/works-data.js だけでOKです。
-       このHTMLは自動で組み立てられるので、書き換え不要です。
-  ================================================= -->
   <section class="home-work">
-    
+
     <div class="wrap">
       <div class="work-grid" data-work-grid data-limit="4">
-        <!-- js/main.js が works-data.js の内容から自動生成します -->
+
       </div>
     </div>
   </section>
 </main>
 
-<!-- ポップアップ(作品クリックで表示) -->
 <div class="work-modal" data-work-modal>
-  <button class="work-modal-nav work-modal-prev" data-modal-prev aria-label="前の作品">‹</button>
+  <button class="work-modal-nav work-modal-prev" data-modal-prev aria-label="前の作品"><</button>
   <div class="work-modal-inner">
     <img data-modal-img src="" alt="">
     <div class="work-modal-body">
@@ -78,13 +51,15 @@
       <p class="desc"><span data-modal-desc></span></p>
     </div>
   </div>
-  <button class="work-modal-nav work-modal-next" data-modal-next aria-label="次の作品">›</button>
+  <button class="work-modal-nav work-modal-next" data-modal-next aria-label="次の作品">></button>
   <button class="work-modal-close" data-modal-close aria-label="閉じる">close</button>
 </div>
 
 <div data-include="partials/footer.html"></div>
 
 <script src="js/works-data.js"></script>
+<script src="js/hero-bubbles-data.js"></script>
+<script src="js/hero-bubbles.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
