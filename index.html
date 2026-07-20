@@ -34,13 +34,17 @@
       <img src="images/hero.png" alt="Key Visual">
     </div>
 
-    <!-- ささやかなお知らせ欄(shopの新着など)。
-         キービジュアルに重なる吹き出し(SVG)+テキストのタイプライター表示。
+    <!--　吹き出し
+         キービジュアルに重なる吹き出し(SVG path)+テキストのタイプライター表示。
+         吹き出しはドラッグで移動でき、足の部分は常に hero.png の中心を向くよう
+         js/main.js の setupHeroBubble() が毎回 path を再計算しています。
          文章一覧・切り替えロジックは js/main.js の setupHeroNews() を編集してください。 -->
-    <div class="hero-news-pos">
-      <div class="hero-news" data-hero-news tabindex="0" role="button" aria-label="お知らせを切り替える">
-        <img class="hero-news-bg" src="images/speech-bubble.svg" alt="" aria-hidden="true">
-        <span class="hero-news-text"><span data-hero-news-text></span><span class="hero-caret" data-hero-caret aria-hidden="true"></span></span>
+    <div class="hero-news-pos" data-hero-news-pos>
+      <div class="hero-news" data-hero-news tabindex="0" role="button" aria-label="お知らせを切り替える(ドラッグで移動できます)">
+        <svg class="hero-news-bg" data-hero-bubble-svg viewBox="-70 -70 310 214" aria-hidden="true">
+          <path data-hero-bubble-path fill="#fff" stroke="#9b9b9b" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"></path>
+        </svg>
+        <span class="hero-news-text" data-hero-news-text-box><span data-hero-news-text></span><span class="hero-caret" data-hero-caret aria-hidden="true"></span></span>
       </div>
     </div>
   </section>

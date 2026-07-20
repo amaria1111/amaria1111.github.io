@@ -31,14 +31,14 @@ main.is-revealed {
   width: 100%;
   max-width: var(--content-width); /* ★ キービジュアルの横幅。中央揃えで表示 */
   margin-inline: auto;
-  margin-top: 350px; /* ★ ヘッダーからの余白。縦位置はウィンドウサイズが変わっても動かないよう固定 */
+  margin-top: 38vh; /* ★ ヘッダーからの余白。縦位置はウィンドウサイズが変わっても動かないよう固定 */
 
 }
 .hero-visual-frame {
   width: 100%;
   height: 26vw; /* ★ キービジュアルの高さ。ウィンドウ幅に比例して変化(以前は360pxで固定だった) */
   min-height: 180px;
-  max-height: 620px;
+  max-height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,37 +56,65 @@ main.is-revealed {
 .hero-visual-frame:hover { transform: scale(1.08); }
 .hero-visual-frame:active { transform: scale(0.99); }
 
-/* ニュース欄: キービジュアルの上端に重なる吹き出し(SVG画像 + テキストのタイプライター表示) */
+/* ニュース欄: キービジュアルの上に重なる吹き出し(SVG path + テキストのタイプライター表示)
+   ★ ドラッグで自由に移動できる。本体の大きさ(width/height)・SVGの表示範囲(viewBox等)・
+     テキストの余白(left/top/right/bottom)はいずれも js/main.js の setupHeroBubble() が
+     表示する文章に合わせて毎回インラインstyleで設定している(ここではデフォルト値のみ)。
+     足の部分は hero.png の中心を常に向くように毎回 path を再計算して描き直している。 */
 .hero-news-pos {
+  /* ★★★ 吹き出しの初期位置はこの2つの数値だけで調整できます ★★★
+     --hero-news-init-x : 右端からの距離(キービジュアルの幅に対する%)。大きくすると左へ、小さくすると右へ動く
+     --hero-news-init-y : 縦位置(吹き出し自身の高さに対する%)。0%でキービジュアル上端と揃い、
+                          マイナスにするほど上にはみ出す(見た目の高さ位置はここで決まる) */
+  --hero-news-init-x: 30%;
+  --hero-news-init-y: -150%;
+
   position: absolute;
   top: 0;
-  right: 25%; /* ★ キービジュアルの幅に対する割合。ウィンドウ幅に比例して変化(以前は18remで固定だった) */
-  transform: translateY(-90%); /* キービジュアルの上端に重ねて配置 */
-  width: min(280px, 60%);
+  right: var(--hero-news-init-x);
+  /* ドラッグした移動量(--hero-news-dx/dy)は上の初期位置に加算される。ドラッグ機構そのものはjs/main.jsのsetupHeroBubble()参照 */
+  transform: translate(var(--hero-news-dx, 0px), calc(var(--hero-news-init-y) + var(--hero-news-dy, 0px)));
   z-index: 2;
 }
 .hero-news {
   position: relative;
   display: block;
-  cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease);
+  cursor: grab;
+  transition: transform var(--duration-fast) var(--ease), width 0.25s var(--ease), height 0.25s var(--ease);
 }
 .hero-news:hover { transform: scale(1.2); }
-.hero-news:active { transform: scale(0.99); }
+.hero-news:active,
+.hero-news.is-dragging { cursor: grabbing; transform: scale(0.99); }
 
+/* 本体(長方形)の外側に足(三角形)がはみ出すぶん、表示領域より広めに描画する。
+   実際のleft/top/width/height(はみ出し量)はサイズに応じてJSが計算してインラインで設定する。 */
 .hero-news-bg {
-  display: block;
-  width: 100%;
-  height: auto;
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
 }
 .hero-news-text {
   position: absolute;
-  inset: 12% 12% 30% 12%;
   display: flex;
-  align-items: center;
+  align-items: center;     /* ★ 文章の上下位置。flex-start(上)/center(中央)/flex-endに変更可 */
+  justify-content: center; /* ★ 文章の左右位置。flex-start(左)/center(中央)/flex-endに変更可 */
   font-size: var(--text-xs);
   line-height: 1.5;
+  white-space: nowrap;
   overflow: hidden;
+  pointer-events: none;
+  transition: left 0.25s var(--ease), right 0.25s var(--ease), top 0.25s var(--ease), bottom 0.25s var(--ease);
+}
+/* テキスト計測専用(画面には表示しない)。.hero-news-textと同じフォント条件で幅・高さを測るための隠し要素 */
+.hero-news-text-measure {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  pointer-events: none;
 }
 /* タイプライター中のカーソル点滅。文章を書き終わったら数回点滅してから消える */
 .hero-caret {
@@ -111,10 +139,6 @@ main.is-revealed {
 }
 @keyframes hero-caret-blink {
   50% { opacity: 0; }
-}
-
-@media (max-width: 700px) {
-  .hero-news-pos { width: min(240px, 75%); }
 }
 
 .home-margin {
