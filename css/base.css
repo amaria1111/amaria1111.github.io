@@ -141,6 +141,7 @@ a:focus-visible, button:focus-visible {
     top: 45px;
     background: var(--color-bg);
     flex-direction: column;
+    align-items: flex-end; /* ★ メニュー項目を右揃えに */
     padding: var(--space-lg) var(--gutter);
     gap: var(--space-md);
     font-size: var(--text-md);

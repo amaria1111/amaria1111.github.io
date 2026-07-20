@@ -102,7 +102,7 @@
    デスクトップ限定の見せ方(スマホは上の基本スタイルのまま)
    ★ 画像に文章を重ね、ホバー中だけ表示。外すと右にスライドしながら消える。
 ------------------------------------------------------------ */
-@media (min-width: 701px) {
+@media (min-width: 701px) and (hover: hover) and (pointer: fine) {
   .work-modal-inner {
     /* ★ grid のままだと暗黙の行が箱の高さまで伸びず、画像のheight:100%が
        正しく解決できないまま欠けてしまうため、画像1枚だけのデスクトップでは
@@ -175,7 +175,7 @@
 .work-modal-nav {
   display: none;
 }
-@media (min-width: 701px) {
+@media (min-width: 701px) and (hover: hover) and (pointer: fine) {
   .work-modal-nav {
     display: block;
     position: absolute;

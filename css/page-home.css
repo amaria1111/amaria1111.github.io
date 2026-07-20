@@ -31,19 +31,19 @@ main.is-revealed {
   width: 100%;
   max-width: var(--content-width); /* ★ キービジュアルの横幅。中央揃えで表示 */
   margin-inline: auto;
-  margin-top: 350px; /* ★ ヘッダーからの余白。吹き出しが上にはみ出すためのスペースも兼ねる */
-  
+  margin-top: 350px; /* ★ ヘッダーからの余白。縦位置はウィンドウサイズが変わっても動かないよう固定 */
+
 }
 .hero-visual-frame {
   width: 100%;
-  height: 360px; /* ★ キービジュアルの高さはここで調整 */
-  min-height: 240px;
-  max-height: 900px;
+  height: 26vw; /* ★ キービジュアルの高さ。ウィンドウ幅に比例して変化(以前は360pxで固定だった) */
+  min-height: 180px;
+  max-height: 620px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  
+
   transition: transform var(--duration-mid) var(--ease);
 }
 .hero-visual-frame img {
@@ -60,7 +60,7 @@ main.is-revealed {
 .hero-news-pos {
   position: absolute;
   top: 0;
-  right: 18rem;
+  right: 25%; /* ★ キービジュアルの幅に対する割合。ウィンドウ幅に比例して変化(以前は18remで固定だった) */
   transform: translateY(-90%); /* キービジュアルの上端に重ねて配置 */
   width: min(280px, 60%);
   z-index: 2;
