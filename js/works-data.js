@@ -1,3 +1,14 @@
+/* ============================================================
+   works-data.js
+   ★ 作品の追加はこの配列に1件足すだけです。work.html は触りません。
+
+   - id          : 表示用の連番
+   - title       : 作品タイトル
+   - year        : 制作年
+   - medium      : カテゴリ・技法
+   - image       : 画像パス(images フォルダ内)
+   - description : ポップアップで表示する説明文
+   ============================================================ */
 
 const WORKS = [
   { id: "01", title: "JPxG - ROUND 2 ",     year: "2024", medium: "jacket design",         image: "images/works/work-01.png", description: "キャラクターデザインとジャケットデザインをしました" },

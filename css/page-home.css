@@ -1,4 +1,14 @@
+/* ============================================================
+   page-home.css
+   Home
+   ============================================================ */
 
+/* ------------------------------------------------------------
+   ページ読み込み時: 上から下へグラデーションで表示する演出
+   ★ base.css の main{opacity/transform} 演出をこのページだけ上書きし、
+     mask-image のグラデーションを動かして「上から表示されていく」動きにする。
+     --reveal-y の数値(%)が表示の境界線の位置。
+------------------------------------------------------------ */
 @property --reveal-y {
   syntax: '<percentage>';
   inherits: false;
@@ -19,16 +29,16 @@ main.is-revealed {
 .hero-visual {
   position: relative;
   width: 100%;
-  max-width: var(--content-width);
+  max-width: var(--content-width); /* ★ キービジュアルの横幅。中央揃えで表示 */
   margin-inline: auto;
-  margin-top: 38vh;
+  margin-top: 31vh; /* ★ ヘッダーからの余白。縦位置はウィンドウサイズが変わっても動かないよう固定 */
 
 }
 .hero-visual-frame {
   width: 100%;
-  height: 26vw;
+  height: 26vw; /* ★ キービジュアルの高さ。ウィンドウ幅に比例して変化(以前は360pxで固定だった) */
   min-height: 180px;
-  max-height: 300px;
+  max-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,26 +49,35 @@ main.is-revealed {
 .hero-visual-frame img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: contain; /* ★ トリミングせず画像全体を表示 */
 }
-
+/* カーソルを合わせると少し拡大、クリックした瞬間は少し縮んで押した感を出す
+   ★ 枠(overflow:hidden)ごと拡大することで、中の画像が枠の上下でクリップされるのを防ぐ */
 .hero-visual-frame:hover { transform: scale(1.08); }
 .hero-visual-frame:active { transform: scale(0.99); }
 
+/* 吹き出し欄: キービジュアルの上に重なる吹き出し(SVG path + テキストのタイプライター表示)
+   ★ 中身(数・文章・追従先)は js/hero-bubbles-data.js、仕組み(生成・ドラッグ・物理演算・
+     足の向き追従)は js/hero-bubbles.js が担当している。DOMは丸ごとJSが生成するため、
+     このCSSはクラス名に対して当たる(吹き出しが何個に増えても共通で効く)。
+   ★ 本体の大きさ(width/height)・SVGの表示範囲(viewBox等)・テキストの余白は
+     表示する文章に合わせて毎回インラインstyleで設定している(ここではデフォルト値のみ)。 */
 .hero-bubbles {
   position: absolute;
   inset: 0;
   z-index: 2;
-  pointer-events: none;
+  pointer-events: none; /* 吹き出し本体(.hero-news)だけクリック・ドラッグを受け付ける */
 }
 .hero-news-pos {
   position: absolute;
   left: 0;
   top: 0;
   opacity: 1;
-
+  /* 実際の位置(x, y)・出現時のtranslate+scaleアニメーションは js/hero-bubbles.js の
+     物理演算ループが毎フレーム transform で更新する(初期位置は hero-bubbles-data.js の initX/initY)。
+     出現はフェードではなく、hero.pngの位置から飛び出してくる動きで見せるためopacityは瞬時に切り替える。 */
 }
-
+/* 出現前・消えている間(js側が.hero-news-posに付け外しする) */
 .hero-news-pos.is-hidden {
   opacity: 0;
   pointer-events: none;
@@ -77,12 +96,15 @@ main.is-revealed {
 .hero-news:active,
 .hero-news.is-dragging { cursor: grabbing; transform: scale(0.99); }
 
+/* 本体(長方形)の外側に足(三角形)がはみ出すぶん、表示領域より広めに描画する。
+   実際のleft/top/width/height(はみ出し量)はサイズに応じてJSが計算してインラインで設定する。 */
 .hero-news-bg {
   position: absolute;
   overflow: visible;
   pointer-events: none;
 }
 
+/* fusion-pixel-12px-proportional-jp-latin-400-normal */
 @font-face {
   font-family: 'Fusion Pixel 12px Proportional JP';
   font-style: normal;
@@ -96,8 +118,8 @@ main.is-revealed {
   font-family: 'Fusion Pixel 12px Proportional JP';
   position: absolute;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center;     /* ★ 文章の上下位置。flex-start(上)/center(中央)/flex-endに変更可 */
+  justify-content: center; /* ★ 文章の左右位置。flex-start(左)/center(中央)/flex-endに変更可 */
   font-size: var(--text-xs);
   line-height: 1.5;
   white-space: nowrap;
@@ -105,7 +127,7 @@ main.is-revealed {
   pointer-events: none;
   transition: left 0.25s var(--ease), right 0.25s var(--ease), top 0.25s var(--ease), bottom 0.25s var(--ease);
 }
-
+/* 画像メッセージ表示中(js側が.hero-news-textに.is-imageを付け外しする): 文章側を隠して画像側を出す */
 .hero-news-image { display: none; }
 .hero-news-text.is-image [data-hero-news-text],
 .hero-news-text.is-image [data-hero-caret] { display: none; }
@@ -117,7 +139,7 @@ main.is-revealed {
   height: auto;
   object-fit: contain;
 }
-
+/* テキスト計測専用(画面には表示しない)。.hero-news-textと同じフォント条件で幅・高さを測るための隠し要素 */
 .hero-news-text-measure {
   position: fixed;
   left: -9999px;
@@ -128,7 +150,7 @@ main.is-revealed {
   line-height: 1.5;
   pointer-events: none;
 }
-
+/* タイプライター中のカーソル点滅。文章を書き終わったら数回点滅してから消える */
 .hero-caret {
   display: inline-block;
   width: 1px;
@@ -138,11 +160,11 @@ main.is-revealed {
   vertical-align: text-bottom;
   opacity: 1;
 }
-
+/* タイピング中: ずっと点滅 */
 .hero-caret.is-blinking {
   animation: hero-caret-blink 0.5s step-end infinite;
 }
-
+/* 書き終わった直後: ★ 回数はここ(3)で調整。指定回数だけ点滅してから消える */
 .hero-caret.is-blink-out {
   animation: hero-caret-blink 0.5s step-end 3;
 }
@@ -158,7 +180,11 @@ main.is-revealed {
   border-bottom: 1px solid var(--color-line);
 }
 
+/* ------------------------------------------------------------
+   home画面のworkギャラリー(プレビュー)
+------------------------------------------------------------ */
 .home-work {
-
+  
+  /*padding-top: 15rem;*/
   padding-bottom: 38vh;
 }

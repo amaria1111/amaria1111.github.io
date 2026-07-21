@@ -15,32 +15,53 @@
 </head>
 <body>
 
+<!-- ============================================================
+     ヘッダーは partials/header.html を読み込んで表示します。
+     ★ ナビの項目・SNSリンク・SHOPのURLを変更したい場合は、
+       このファイルではなく partials/header.html を編集してください。
+       1回の編集で home / work / about / contact すべてに反映されます。
+============================================================= -->
 <div data-include="partials/header.html"></div>
 
 <main>
-
+  <!-- ==================== キービジュアル ====================
+       ★ ページを開いてすぐに表示される画像です。
+       画像を差し替えるには images/hero.jpg を上書きするか、
+       下の src="images/hero.jpg" のパスを変更してください。
+  ================================================= -->
   <section class="hero-visual">
     <div class="hero-visual-frame">
       <img src="images/hero.png" alt="Key Visual">
     </div>
 
+    <!--　吹き出し(複数対応)
+         キービジュアルに重なる吹き出し(SVG path)+テキストのタイプライター表示。
+         吹き出しはドラッグで移動でき(離すと勢いよく飛ぶ)、足の部分は常にtarget
+         (hero.pngか他の吹き出し)の中心を向くよう js/hero-bubbles.js が毎フレーム
+         再計算しています。吹き出しの数・文章・追従先は js/hero-bubbles-data.js の
+         HERO_BUBBLES 配列を編集してください(このdivの中身はJSが自動で生成します)。 -->
     <div class="hero-bubbles" data-hero-bubbles></div>
   </section>
 
   <div class="home-margin">
-
+    
   </div>
 
+  <!-- ==================== workギャラリー(プレビュー) ====================
+       ★ 作品の追加・編集は js/works-data.js だけでOKです。
+       このHTMLは自動で組み立てられるので、書き換え不要です。
+  ================================================= -->
   <section class="home-work">
-
+    
     <div class="wrap">
       <div class="work-grid" data-work-grid data-limit="4">
-
+        <!-- js/main.js が works-data.js の内容から自動生成します -->
       </div>
     </div>
   </section>
 </main>
 
+<!-- ポップアップ(作品クリックで表示) -->
 <div class="work-modal" data-work-modal>
   <button class="work-modal-nav work-modal-prev" data-modal-prev aria-label="前の作品"><</button>
   <div class="work-modal-inner">
